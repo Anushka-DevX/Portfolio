@@ -278,16 +278,49 @@ function copyToClipboard(text, buttonElement) {
     }
 }
 
-function handleFormSubmit(event) {
+// Supabase Integration Config (Replace with your Supabase Project details)
+const SUPABASE_URL = "";
+const SUPABASE_ANON_KEY = "";
+let supabaseClient = null;
+
+if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
+
+async function handleFormSubmit(event) {
     event.preventDefault();
 
     const nameInput = document.getElementById('senderName').value;
     const emailInput = document.getElementById('senderEmail').value;
+    const phoneInput = document.getElementById('senderPhone').value;
+    const subjectInput = document.getElementById('msgSubject').value;
     const msgInput = document.getElementById('senderMsg').value;
 
     if (!nameInput || !emailInput || !msgInput) {
         showToast('Please fill out all required fields (*)');
         return;
+    }
+
+    if (supabaseClient) {
+        try {
+            const { data, error } = await supabaseClient
+                .from('contact_messages')
+                .insert([
+                    {
+                        name: nameInput,
+                        email: emailInput,
+                        phone: phoneInput,
+                        subject: subjectInput,
+                        message: msgInput
+                    }
+                ]);
+
+            if (error) {
+                console.error("Supabase Error:", error);
+            }
+        } catch (err) {
+            console.error("Supabase Connection Exception:", err);
+        }
     }
 
     showToast(`Thank you ${nameInput}! Your message has been sent to Anushka. 🚀`);
