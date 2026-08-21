@@ -278,9 +278,9 @@ function copyToClipboard(text, buttonElement) {
     }
 }
 
-// Supabase Integration Config (Replace with your Supabase Project details)
-const SUPABASE_URL = "";
-const SUPABASE_ANON_KEY = "";
+// Supabase Integration Config
+const SUPABASE_URL = "https://mypmjympmbndrpsxwzmi.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15cG1qeW1wbWJuZHJwc3h3em1pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyOTc1MTUsImV4cCI6MjEwMjg3MzUxNX0.ie_5uqUekXLmhKuthXdZ-hSG-Hthq5Uc6JvkjOwEzOY";
 let supabaseClient = null;
 
 if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY) {
